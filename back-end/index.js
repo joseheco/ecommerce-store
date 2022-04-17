@@ -13,37 +13,69 @@ password: 'bsale_test',
 database: 'bsale_test',
 }
 
-function handleDisconnect(){
-  const connection = mysql.createConnection(db_config);
+const pool = mysql.createPool(db_config)
+const connected = mysql.createConnection(db_config)
 
-connection.connect((err) => {
-  if (err) {;
-    console.log("Error: " + err.stack);
-    return;
-  }
-  console.log("Connect DB")
+connected.connect((err) => {
+if (err) {;
+      console.log("Error: " + err.stack);
+      return;
+    }
+    console.log("Connect DB")
+  })
+
+  app.get("/product", (req, res) => {
+  product(pool,(result) => {
+    res.json(result);
+  })
 })
 
-connection.on('error', function(err) {
+app.get("/categorie", (req, res) => {
+  categorie(pool,(result) => {
+    res.json(result);
+  })
+})
+
+// pool.on('connection', function (connection) {
+//   connection.query('SET SESSION auto_increment_increment=1')
+// });
+
+pool.on('acquire', function (connection) {
+  console.log('Connection %d acquired', connection.threadId);
+});
+
+
+function handleDisconnect(){
+//   const connection = mysql.createConnection(db_config);
+
+// connection.connect((err) => {
+//   if (err) {;
+//     console.log("Error: " + err.stack);
+//     return;
+//   }
+//   console.log("Connect DB")
+// })
+
+connected.on('error', function(err) {
   console.log('db error', err);
-  if(err.code === 'PROTOCOL_CONNECTION_LOST') { 
+  if(err.code === 'PROTOCOL_CONNECTION_LOST' || err.code === 'PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR') { 
     handleDisconnect();                         
   } else {                                      
     throw err;                                 
   }
 });
 
-app.get("/product", (req, res) => {
-  product(connection,(result) => {
-    res.json(result);
-  })
-})
+// app.get("/product", (req, res) => {
+//   product(connection,(result) => {
+//     res.json(result);
+//   })
+// })
 
-app.get("/categorie", (req, res) => {
-  categorie(connection,(result) => {
-    res.json(result);
-  })
-})
+// app.get("/categorie", (req, res) => {
+//   categorie(connection,(result) => {
+//     res.json(result);
+//   })
+// })
 }
 
 handleDisconnect();
