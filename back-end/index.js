@@ -7,10 +7,10 @@ const { product, categorie } = require("./operations");
 app.use(express.json());
 
 const db_config = {
-host: 'mdb-test.c6vunyturrl6.us-west-1.rds.amazonaws.com',
-user: 'bsale_test',
-password: 'bsale_test',
-database: 'bsale_test',
+host: process.env.DBHOST,
+user: process.env.DBUSER,
+password: process.env.DBPASSWORD,
+database: process.env.DATABASE,
 }
 
 const pool = mysql.createPool(db_config)
