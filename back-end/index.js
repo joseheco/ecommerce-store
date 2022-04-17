@@ -3,7 +3,7 @@ const app = express();
 const mysql = require("mysql");
 require("dotenv").config();
 
-const { read } = require("./operations");
+const { product, categorie } = require("./operations");
 app.use(express.json());
 
 const db_config = {
@@ -33,14 +33,14 @@ connection.on('error', function(err) {
   }
 });
 
-app.use("/read", (req, res) => {
-  read(connection,(result) => {
+app.get("/product", (req, res) => {
+  product(connection,(result) => {
     res.json(result);
   })
 })
 
-app.get("/read", (req, res) => {
-  read(connection,(result) => {
+app.get("/categorie", (req, res) => {
+  categorie(connection,(result) => {
     res.json(result);
   })
 })
