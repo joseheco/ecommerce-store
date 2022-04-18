@@ -1,9 +1,11 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const mysql = require("mysql");
 require("dotenv").config();
 
-const { product, categorie } = require("./operations");
+const { product, categorie, productByCategory, productsByName } = require("./operations");
+app.use(cors());
 app.use(express.json());
 
 const db_config = {
@@ -30,7 +32,19 @@ if (err) {;
   })
 })
 
-app.get("/categorie", (req, res) => {
+app.get("/product/category/:catName", (req, res) => {
+  productByCategory(pool,req.params.catName,(result) => {
+    res.json(result);
+  })
+})
+
+app.get("/product/search/:prodName", (req, res) => {
+  productsByName(pool,req.params.prodName,(result) => {
+    res.json(result);
+  })
+})
+
+app.get("/category", (req, res) => {
   categorie(pool,(result) => {
     res.json(result);
   })
@@ -58,7 +72,7 @@ function handleDisconnect(){
 
 connected.on('error', function(err) {
   console.log('db error', err);
-  if(err.code === 'PROTOCOL_CONNECTION_LOST' || err.code === 'PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR') { 
+  if(err.code === 'PROTOCOL_CONNECTION_LOST') { 
     handleDisconnect();                         
   } else {                                      
     throw err;                                 
