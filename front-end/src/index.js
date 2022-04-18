@@ -1,35 +1,35 @@
 import './styles.css';
+import 'boxicons'
 
 const displaySection = document.querySelector('.items')
 const search = document.querySelector('#search')
 const displayCategories = document.querySelector('#categories')
-const img = document.createElement('img');
-document.body.appendChild(img);
+//const img = document.createElement('img');
+//document.body.appendChild(img);
 
 const getProducts = async () => {
-  const url = 'http://localhost:8080/product'
+  const url = 'http://localhost:3000/product'
   const response = await fetch(url);
   const result = await response.json();
   return result
 }
 
 const getCategories = async () => {
-  const url = `http://localhost:8080/category`
+  const url = `http://localhost:3000/category`
   const response = await fetch(url);
   const result = await response.json();
   return result
 }
 
 const getObjByCategory = async (catName) => {
-  const url = `http://localhost:8080/product/category/${catName}`
+  const url = `http://localhost:3000/product/category/${catName}`
   const response = await fetch(url);
   const result = await response.json();
-  console.log(result)
   return result
 }
 
 const productsByName = async (prodName) => {
-  const url = `http://localhost:8080/product/search/${prodName}`
+  const url = `http://localhost:3000/product/search/${prodName}`
   const response = await fetch(url);
   const result = await response.json();
   return result
@@ -38,20 +38,21 @@ const productsByName = async (prodName) => {
 function buildProductList(list) {
   displaySection.innerHTML = ""
   for(let i = 0; i < list.length; i++){
-    console.log(list[i].name)
-    const card = document.createElement('div');
+  const discount = list[i].discount;
+  const card = document.createElement('div');
   
     card.classList.add('card');
     card.innerHTML = `<img src="${list[i].url_image}">
                       <div class="cardTitle">
-                      <h1>${list[i].name}</h1>
-                      <p>${list[i].price}</p>
+                      <h3>${list[i].name}</h3>
+                      <div class="price-car">
+                        <p class="price">$${list[i].price}</p>
+                        <box-icon type='solid' color='white' name='cart' class="car"></box-icon>
                       </div>
-                      <p >${list[i].discount}</p>
-                      <div class="btns">
-                      <p>${list[i].category}</p>
-                      </div>`
+                      </div>
+                      <p class="discount">&nbsp;-${discount} OFF</p>`
     displaySection.appendChild(card)
+  
   }
 }
 
@@ -64,12 +65,12 @@ function displayByCategory(catName) {
 function buildCategoryList(list) {
   displayCategories.innerHTML = "";
     const ul = document.createElement('ul');
+    ul.classList.add('categories')
     list.forEach(elem => {
       const li = document.createElement('li');
       li.setAttribute('data-name', elem.name);
       li.textContent = elem.name
       li.addEventListener('click', (event) => {
-        console.log(event.target.dataset.name)
         displayByCategory(event.target.dataset.name)
       })
       ul.appendChild(li)

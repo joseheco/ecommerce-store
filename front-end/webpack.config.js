@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const rulesCSS = {test: /\.css$/,
-use:['style-loader', 'css-loader', 'postcss-loader']}
+use:['style-loader', 'css-loader']}
 
 const rules = [rulesCSS]
 
