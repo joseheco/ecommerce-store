@@ -4,8 +4,6 @@ import 'boxicons'
 const displaySection = document.querySelector('.items')
 const search = document.querySelector('#search')
 const displayCategories = document.querySelector('#categories')
-//const img = document.createElement('img');
-//document.body.appendChild(img);
 
 const getProducts = async () => {
   const url = 'http://localhost:3000/product'
