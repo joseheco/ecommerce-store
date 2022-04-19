@@ -33,22 +33,36 @@ const productsByName = async (prodName) => {
   return result
 }
 
+function displayDiscountFlag(discount){
+  if ( discount > 0) {
+    return `<p class="discount">&nbsp;-${discount} OFF</p>`;
+  }
+  return "";
+}
+
+function fixFormatPrice(price) {
+  var str = price.toString().split(".");
+  str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return str.join(".");
+}
+
 function buildProductList(list) {
   displaySection.innerHTML = ""
   for(let i = 0; i < list.length; i++){
   const discount = list[i].discount;
+  const price = list[i].price
   const card = document.createElement('div');
-  
+
     card.classList.add('card');
     card.innerHTML = `<img src="${list[i].url_image}">
                       <div class="cardTitle">
                       <h3>${list[i].name}</h3>
                       <div class="price-car">
-                        <p class="price">$${list[i].price}</p>
+                        <p class="price">$${fixFormatPrice(price)}</p>
                         <box-icon type='solid' color='white' name='cart' class="car"></box-icon>
                       </div>
                       </div>
-                      <p class="discount">&nbsp;-${discount} OFF</p>`
+                      ${displayDiscountFlag(discount)}`
     displaySection.appendChild(card)
   
   }
