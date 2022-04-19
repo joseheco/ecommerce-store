@@ -1,37 +1,10 @@
 import './styles.css';
 import 'boxicons'
+import { getProducts, getCategories, productsByName  } from './modules/apiConexion'
+import { buildCategoryList } from './modules/categories';
 
-const displaySection = document.querySelector('.items')
-const search = document.querySelector('#search')
-const displayCategories = document.querySelector('#categories')
-
-const getProducts = async () => {
-  const url = 'http://localhost:3000/product'
-  const response = await fetch(url);
-  const result = await response.json();
-  return result
-}
-
-const getCategories = async () => {
-  const url = `http://localhost:3000/category`
-  const response = await fetch(url);
-  const result = await response.json();
-  return result
-}
-
-const getObjByCategory = async (catName) => {
-  const url = `http://localhost:3000/product/category/${catName}`
-  const response = await fetch(url);
-  const result = await response.json();
-  return result
-}
-
-const productsByName = async (prodName) => {
-  const url = `http://localhost:3000/product/search/${prodName}`
-  const response = await fetch(url);
-  const result = await response.json();
-  return result
-}
+const displaySection = document.querySelector('.items');
+const search = document.querySelector('#search');
 
 function displayDiscountFlag(discount){
   if ( discount > 0) {
@@ -46,7 +19,7 @@ function fixFormatPrice(price) {
   return str.join(".");
 }
 
-function buildProductList(list) {
+export function buildProductList(list) {
   displaySection.innerHTML = ""
   for(let i = 0; i < list.length; i++){
   const discount = list[i].discount;
@@ -64,39 +37,7 @@ function buildProductList(list) {
                       </div>
                       ${displayDiscountFlag(discount)}`
     displaySection.appendChild(card)
-  
   }
-}
-
-function displayByCategory(catName) {
-  getObjByCategory(catName).then(res => {
-    buildProductList(res)
-  })
-}
-
-function buildCategoryList(list) {
-  displayCategories.innerHTML = "";
-    const ul = document.createElement('ul');
-    ul.classList.add('categories')
-    list.forEach(elem => {
-      const li = document.createElement('li');
-      li.setAttribute('data-name', elem.name);
-      li.textContent = elem.name
-      li.addEventListener('click', (event) => {
-        displayByCategory(event.target.dataset.name)
-      })
-      ul.appendChild(li)
-    })
-    displayCategories.appendChild(ul)
-}
-
-function display() {
-  getCategories().then(res => {
-    buildCategoryList(res);
-    getProducts().then(res => {
-      buildProductList(res)
-    })
-  })
 }
 
 function searchByProdName(prodName) {
@@ -108,5 +49,14 @@ function searchByProdName(prodName) {
 search.addEventListener('input', (event) => {
   searchByProdName(event.target.value)
 })
+
+function display() {
+  getCategories().then(res => {
+    buildCategoryList(res);
+    getProducts().then(res => {
+      buildProductList(res)
+    })
+  })
+}
 
 display();

@@ -68,6 +68,6 @@ connected.on('error', function(err) {
 
 handleDisconnect();
 
-app.listen(3000, () => {
-  console.log("server 3000 connected...");
+app.listen(process.env.PORT || 3000, () => {
+  console.log("server connected...");
 })
