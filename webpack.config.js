@@ -6,9 +6,9 @@ const rules = [rulesCSS]
 
 module.exports = {
   devServer: {
-    watchFiles: ["front-end/src/**/*"],
+    watchFiles: ["/src/**/*"],
   },
-  context: __dirname + '/front-end/src',
+  context: __dirname + '/src',
   entry: './index.js',
   plugins: [ new HtmlWebpackPlugin({ template: 'index.html'}) ],
   module: { rules }
