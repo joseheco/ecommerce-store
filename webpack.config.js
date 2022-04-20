@@ -7,7 +7,7 @@ const rules = [rulesCSS]
 
 module.exports = {
   output: { 
-    path: path.resolve(__dirname, './back-end/public')
+    path: path.resolve(__dirname, './front-end/public')
   },
   devServer: {
     watchFiles: ["front-end/src/**/*"],
