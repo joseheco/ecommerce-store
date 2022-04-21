@@ -1,0 +1,116 @@
+nav {
+  background-color: #F6C74E;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 2;
+  top: 0px;
+  width: 100%;
+}
+
+main {
+  display: flex;
+}
+
+.nav-store {
+  display: flex;
+  align-items: center;
+  gap:0.2rem;
+  text-decoration: none;
+}
+
+.nav-store:visited {
+  color: black;
+}
+
+.title-store {
+  font-size: 1.5rem;
+}
+
+#search {
+  border-radius: 10px;
+  height: 3rem;
+  width: 15rem;
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2.5rem;
+  justify-content: center;
+}
+
+img {
+  width: 300px;
+  height: 17rem;
+  border-bottom: 1px solid gray;
+  padding: 1rem;
+}
+
+.card {
+  border: 1px solid gray;
+  border-radius: 3px;
+  margin: 1rem;
+  box-shadow: 2px 2px 2px 1px gray;
+  background-color: white;
+}
+
+.cardTitle h3 {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.categories {
+  font-size: 1.3rem;
+  width: 100%;
+  margin-top: 5rem;
+  margin-right: 10rem;
+  border-right: 1px solid gray;
+}
+
+.categories li {
+  margin-bottom: 2rem;
+  list-style: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.categories li:hover {
+  background-color: rgb(171, 167, 167);
+  padding: 0.5rem;
+  color: white;
+  cursor: pointer;
+}
+
+.price {
+  font-size: 1.3rem;
+  color: rgb(212, 63, 63);
+}
+
+.discount {
+  width: 18%;
+  position: relative;
+  z-index: 1;
+  padding: 0.2rem;
+  left: 16rem;
+  bottom: 25rem;
+  background-color: #FF130A;
+  border-radius: 3px;
+}
+
+.price-car {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.car {
+  width: 28px;
+  height: 28px;
+  border-radius: 15px;
+  color: white;
+  background-color: black;
+}
